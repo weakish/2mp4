@@ -2,10 +2,9 @@ package main
 
 import (
 	"github.com/weakish/goaround"
+	"github.com/weakish/gosugar"
 	"os"
-	"os/exec"
 	"strings"
-	"syscall"
 )
 
 func main() {
@@ -16,16 +15,7 @@ func main() {
 		var inputFileName string = os.Args[1]
 		var basename []string = strings.Split(inputFileName, ".")
 		var outputFileName string = strings.Join(basename, "")
-		args := []string{"-i", inputFileName, "-c", "copy", outputFileName}
-		err := syscall.Exec(which("ffmpeg"), args, os.Environ())
-
-		goaround.PanicIf(err)
+		args := []string{"ffmpeg", "-i", inputFileName, "-c", "copy", outputFileName}
+		gosugar.Exec(args)
 	}
-}
-func which(command string) string {
-	var commandPath string
-	commandPath, err := exec.LookPath(command)
-	goaround.PanicIf(err)
-
-	return commandPath
 }
