@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) == 1 {
-		os.Stderr.WriteString("Please specify input file name.\n")
+		goaround.ErrPrint("Please specify input file name.")
 		os.Exit(64)
 	} else {
 		var inputFileName string = os.Args[1]
