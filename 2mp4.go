@@ -1,10 +1,11 @@
 package main
 
 import (
-	"syscall"
+	"github.com/weakish/goaround"
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 )
 
 func main() {
@@ -18,18 +19,13 @@ func main() {
 		args := []string{"-i", inputFileName, "-c", "copy", outputFileName}
 		err := syscall.Exec(which("ffmpeg"), args, os.Environ())
 
-		panicIf(err)
-	}
-}
-func panicIf(err error) {
-	if err != nil {
-		panic(err)
+		goaround.PanicIf(err)
 	}
 }
 func which(command string) string {
 	var commandPath string
 	commandPath, err := exec.LookPath(command)
-	panicIf(err)
+	goaround.PanicIf(err)
 
 	return commandPath
 }
